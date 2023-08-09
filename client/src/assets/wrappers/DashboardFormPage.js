@@ -30,7 +30,7 @@ const Wrapper = styled.section`
     place-items: center;
   }
   .avatar {
-    max-width: 100%;
+    max-width: 50%;
     max-height: 100%;
   }
   .markdown-container {
