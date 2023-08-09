@@ -32,8 +32,6 @@ const Wrapper = styled.section`
   .avatar {
     width: 50%;
     height: 100%;
-    max-width: 50%;
-    max-heigth: 100%;
   }
   .markdown-container {
     margin: 2rem 0;
