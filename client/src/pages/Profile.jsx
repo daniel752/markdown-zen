@@ -35,7 +35,7 @@ const Profile = () => {
           {user.avatar ? (
             <img className="avatar" src={user.avatar} alt="avatar"></img>
           ) : (
-            <FaUserCircle className="profile-img" />
+            <FaUserCircle className="avatar" />
           )}
           {/* </div> */}
         </div>
