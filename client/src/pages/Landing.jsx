@@ -7,19 +7,22 @@ import { Link } from 'react-router-dom';
 const Landing = () => {
   return (
     <Wrapper>
-      {/* <nav>
-        <Logo></Logo>
-      </nav> */}
       <div className="container page">
         <div className="info">
           <h1>
             <span>MarkdownZen: </span>Markdown Made Zenful
           </h1>
           <p>
-            Welcome to My Spot - Where Thoughts Shine! Unleash your creativity
-            and connect with others through meaningful blogging. Join today and
-            claim your spot in our vibrant community of passionate thinkers!
-            Let's make your ideas shine together.
+            Welcome to MarkdownZen, the ultimate platform for creating,
+            managing, and mastering your markdown content. Whether you're a
+            seasoned writer or just beginning to explore the power of markdown,
+            MarkdownZen offers you a tranquil haven to streamline your writing
+            process. With intuitive tools and a serene interface, you can craft
+            your markdown creations with ease, preview them in real time, and
+            organize them effortlessly. Experience the harmony of MarkdownZen as
+            it empowers you to focus on what truly matters, your content. Join
+            us on a journey to elevate your markdown experience and achieve
+            zen-like proficiency in managing your valuable written work.
           </p>
           <Link to="/register" className="btn register-link">
             Register
@@ -29,7 +32,6 @@ const Landing = () => {
           </Link>
         </div>
         <Logo />
-        {/* <img src={main} alt="blog" className="img main-img" /> */}
       </div>
     </Wrapper>
   );
