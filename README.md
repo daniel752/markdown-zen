@@ -28,7 +28,7 @@ Before you begin, make sure you have the following software installed on your co
    Open your terminal/command prompt and navigate to the location where you want to store the project. Then, run the following command:
 
 ``
-git clone https://github.com/your-username/markdown-zen.git
+git clone https://github.com/daniel752/markdown-zen.git
 ``
 
 This will download the project files to your computer.
@@ -55,7 +55,7 @@ This will install the required packages for the server and client components of 
 
 1. **Start the Application**:
 
-To launch the application, run the following command:
+To launch the application, run the following command in the root (markdown-zen/) folder:
 
 ``
 npm run dev
@@ -65,7 +65,7 @@ This command starts both the server and the client concurrently, so you can acce
 
 2. **Access the App**:
 
-Open your web browser and go to `http://localhost:3000`. This is where you'll find the MarkdownZen app.
+Open your web browser and go to `http://localhost:5173`. This is where you'll find the MarkdownZen app.
 
 3. **Creating and Managing Markdowns**:
 
