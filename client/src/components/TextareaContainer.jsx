@@ -3,7 +3,6 @@ import MarkdownEditor from '@uiw/react-markdown-editor';
 import { useDashboardContext } from '../pages/DashboardLayout';
 
 const TextareaContainer = ({ defaultValue = '' }) => {
-  const { isDarkTheme } = useDashboardContext();
   const [mdContent, setMdContent] = useState(defaultValue);
 
   return (
