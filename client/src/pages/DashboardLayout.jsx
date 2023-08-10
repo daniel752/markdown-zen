@@ -1,38 +1,33 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { Navigate, Outlet, useLoaderData, useNavigate } from "react-router-dom";
-import { createContext, useContext, useState } from "react";
-import Wrapper from "../assets/wrappers/Dashboard";
-import { SmallSidebar, BigSidebar, Navbar } from "../components";
-import customRequest from "../../../utils/customRequest";
-import { dashboardLoader } from "../utils/loadersUtils";
+import { Navigate, Outlet, useLoaderData, useNavigate } from 'react-router-dom';
+import { createContext, useContext, useState } from 'react';
+import Wrapper from '../assets/wrappers/Dashboard';
+import { SmallSidebar, BigSidebar, Navbar } from '../components';
+import customRequest from '../../../utils/customRequest';
+import { dashboardLoader } from '../utils/loadersUtils';
 import { toast } from 'react-toastify';
 
 const DashboardContext = createContext();
 
-const DashboardLayout = ({ isDarkThemeEnabled }) =>
-{
+const DashboardLayout = ({ isDarkThemeEnabled }) => {
   const navigate = useNavigate();
   const { user } = useLoaderData();
   const [showSidebar, setShowSidebar] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(isDarkThemeEnabled);
 
-  const toggleDarkTheme = () =>
-  {
+  const toggleDarkTheme = () => {
     const newTheme = !isDarkTheme;
     setIsDarkTheme(newTheme);
-    document.body.classList.toggle("dark-theme", newTheme);
-    localStorage.setItem("darkTheme", newTheme);
-    console.log("toggle dark theme");
+    document.body.classList.toggle('dark-theme', newTheme);
+    localStorage.setItem('darkTheme', newTheme);
   };
 
-  const toggleSidebar = () =>
-  {
+  const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
 
-  const logoutUser = async () =>
-  {
+  const logoutUser = async () => {
     navigate('/');
     await customRequest('/auth/logout');
     toast.success('bye bye');

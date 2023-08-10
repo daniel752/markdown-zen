@@ -6,17 +6,16 @@ const Wrapper = styled.section`
     grid-template-columns: 1fr;
   }
   .dashboard-page {
-    width: 100vw;
-    margin: 0 auto;
-    padding: 2rem 0px;
+    width: 100%;
+    /* margin: 0 auto; */
+    padding: 2rem 0 0 0;
     margin-left: 2.25rem;
+    width: 97%;
+    max-width: 97%;
   }
   @media (min-width: 992px) {
     .dashboard {
       grid-template-columns: auto 1fr;
-    }
-    .dashboard-page {
-      width: 90%;
     }
   }
 `;

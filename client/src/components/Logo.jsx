@@ -1,6 +1,6 @@
-import logo from '../assets/images/MarkdownZen-logos_black.png';
-
-const Logo = () => {
-  return <img src={logo} alt="MySpot" className="logo"></img>;
+const Logo = ({ src = '/logo_black.png' }) => {
+  return (
+    <img src={src} alt="MarkdownZen logo" className="logo" id="logo"></img>
+  );
 };
 export default Logo;

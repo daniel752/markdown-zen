@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Wrapper = styled.nav`
   height: var(--nav-height);
@@ -27,8 +27,7 @@ const Wrapper = styled.nav`
     display: none;
   }
   .logo {
-    display: flex;
-    align-items: center;
+    display: none;
   }
   .btn-container {
     display: flex;
@@ -39,12 +38,6 @@ const Wrapper = styled.nav`
     top: 0;
     .nav-center {
       width: 90%;
-    }
-    .logo {
-      display: none;
-    }
-    .logo-text {
-      display: block;
     }
   }
 `;

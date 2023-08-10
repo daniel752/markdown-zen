@@ -3,7 +3,6 @@ import {
   BsFillChatLeftHeartFill,
   BsFillChatLeftTextFill,
   BsFillEyeFill,
-  BsFillInfoSquareFill,
 } from 'react-icons/bs';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -12,7 +11,6 @@ import PostInfo from './PostInfo';
 import { Form } from 'react-router-dom';
 import day from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import MarkdownContainer from './MarkdownContainer';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import remarkEmoji from 'remark-emoji';

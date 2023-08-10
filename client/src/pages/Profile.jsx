@@ -6,16 +6,12 @@ import Wrapper from '../assets/wrappers/DashboardFormPage';
 const Profile = () => {
   const { user } = useOutletContext();
   const { firstName, lastName, email } = user;
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting';
 
   return (
     <Wrapper>
       <Form method="post" className="form" encType="multipart/form-data">
         <h4 className="form-title">profile</h4>
-        <div className="form-center">
-          {/* <div className="grid-row"> */}
-          {/* <div> */}
+        <div className="form-center profile-form">
           <div className="form-row">
             <label htmlFor="avatar" className="form-label">
               Select an image file (0.5 max)
@@ -27,24 +23,19 @@ const Profile = () => {
               className="form-input"
               accept="image/*"
             />
-            {/* </div> */}
             <FormRow type="text" name="firstName" defaultValue={firstName} />
             <FormRow type="text" name="lastName" defaultValue={lastName} />
           </div>
-          {/* <div className="profile-img"> */}
           {user.avatar ? (
             <img className="avatar" src={user.avatar} alt="avatar"></img>
           ) : (
             <FaUserCircle className="avatar" />
           )}
-          {/* </div> */}
         </div>
-        {/* <FormRow type="text" name="email" defaultValue={email} /> */}
         <SubmitBtn
           formBtn="form-btn edit-profile-btn"
           submitText="save changes"
         />
-        {/* </div> */}
       </Form>
     </Wrapper>
   );

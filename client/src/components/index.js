@@ -9,7 +9,7 @@ export { default as SearchContainer } from './SearchContainer';
 export { default as PostsContainer } from './PostsContainer';
 export { default as Post } from './Post';
 export { default as PostInfo } from './PostInfo';
-export { default as MarkdownContainer } from './MarkdownContainer';
+// export { default as MarkdownContainer } from './MarkdownContainer';
 export { default as SubmitBtn } from './SubmitBtn';
 export { default as StatItem } from './StatItem';
 export { default as StatsContainer } from './StatsContainer';

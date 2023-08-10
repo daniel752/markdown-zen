@@ -1,21 +1,19 @@
 /* eslint-disable no-unused-vars */
-import Wrapper from "../assets/wrappers/SmallSidebar";
-import { useDashboardContext } from "../pages/DashboardLayout";
-import { FaTimes } from "react-icons/fa";
-import Logo from "./Logo";
-import links from "../utils/links";
-import { NavLink } from "react-router-dom";
-import NavLinks from "./NavLinks";
+import Wrapper from '../assets/wrappers/SmallSidebar';
+import { useDashboardContext } from '../pages/DashboardLayout';
+import { FaTimes } from 'react-icons/fa';
+import Logo from './Logo';
+import links from '../utils/links';
+import { NavLink } from 'react-router-dom';
+import NavLinks from './NavLinks';
 
-const SmallSidebar = () =>
-{
-  const { showSidebar, toggleSidebar } = useDashboardContext();
-
+const SmallSidebar = () => {
+  const { showSidebar, toggleSidebar, isDarkTheme } = useDashboardContext();
   return (
     <Wrapper>
       <div
         className={
-          showSidebar ? "sidebar-container show-sidebar" : "sidebar-container"
+          showSidebar ? 'sidebar-container show-sidebar' : 'sidebar-container'
         }
       >
         <div className="content">
@@ -23,7 +21,7 @@ const SmallSidebar = () =>
             <FaTimes />
           </button>
           <header>
-            <Logo />
+            <Logo src={isDarkTheme ? '/logo_white.png' : '/logo_black.png'} />
           </header>
           <NavLinks />
         </div>

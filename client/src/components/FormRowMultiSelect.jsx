@@ -25,7 +25,6 @@ const FormRowMultiSelect = ({ name, labelText, list, defaultValue = [] }) => {
         {labelText}
       </label>
       <MultiSelect
-        className="multi-select"
         options={convertListToMultiSelectFormat(list)}
         value={selected}
         onChange={setSelected}
@@ -36,7 +35,7 @@ const FormRowMultiSelect = ({ name, labelText, list, defaultValue = [] }) => {
         name={name}
         value={JSON.stringify(
           selected.map(item => {
-            return item.value.toUpperCase();
+            return item.value;
           }),
         )}
       />

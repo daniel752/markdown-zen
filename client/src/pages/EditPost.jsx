@@ -2,22 +2,17 @@ import {
   FormRow,
   FormRowMultiSelect,
   FormRowSelect,
-  MarkdownContainer,
   SubmitBtn,
 } from '../components';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { useLoaderData } from 'react-router-dom';
-import { useState } from 'react';
 import { STATUS, CATEGORY, TAG } from '../../../utils/constants';
-import { Form, useNavigation, redirect } from 'react-router-dom';
-import { convertListToMultiSelectFormat } from '../utils/formatsUtils';
+import { Form, useNavigation } from 'react-router-dom';
 import TextareaContainer from '../components/TextareaContainer';
 
 const EditPost = () => {
   const { post } = useLoaderData();
   const { title, categories, tags, content, status } = post;
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting';
 
   return (
     <Wrapper>
