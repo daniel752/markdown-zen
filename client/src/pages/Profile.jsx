@@ -32,10 +32,7 @@ const Profile = () => {
             <FaUserCircle className="avatar" />
           )}
         </div>
-        <SubmitBtn
-          formBtn="form-btn edit-profile-btn"
-          submitText="save changes"
-        />
+        <SubmitBtn formBtn="form-btn profile-btn" submitText="save changes" />
       </Form>
     </Wrapper>
   );

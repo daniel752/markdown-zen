@@ -4,6 +4,8 @@ import { StatusCodes } from 'http-status-codes';
 import { NotFoundError } from '../errors/CustomErrors.js';
 import mongoose from 'mongoose';
 import day from 'dayjs';
+import fs from 'fs';
+import { URL } from 'url';
 
 export const getAllPosts = async (req, res) => {
   const posts = await PostModel.find({});
@@ -11,7 +13,6 @@ export const getAllPosts = async (req, res) => {
 };
 
 export const getUserPosts = async (req, res) => {
-  console.log(req.query);
   const { title, status, categories, sort } = req.query;
   const queryObj = {
     author: req.user.userId,
@@ -54,7 +55,6 @@ export const getPost = async (req, res) => {
 
 export const addPost = async (req, res) => {
   req.body.author = req.user.userId;
-  console.log(req.body);
   const post = await PostModel.create(req.body);
   res.status(StatusCodes.CREATED).json({ post });
 };
@@ -117,4 +117,31 @@ export const getPostStats = async (req, res) => {
     .reverse();
 
   res.status(StatusCodes.OK).json({ defaultStats, monthlyPosts });
+};
+
+const getCurrentDir = () => {
+  const currentModulePath = new URL(import.meta.url).pathname;
+  const currentDir = currentModulePath.replace(/\/[^/]*$/, '');
+  return currentDir;
+};
+
+export const downloadPost = (req, res) => {
+  const { markdown } = req.body;
+  const { title, content } = JSON.parse(markdown);
+
+  const downloadPath = `${getCurrentDir()}/../public/downloads`;
+  const fileName = `${title}.md`;
+  const filePath = `${downloadPath}/${fileName
+    .toLowerCase()
+    .split(' ')
+    .join('_')}`;
+  fs.writeFileSync(filePath, content);
+  res.download(filePath, fileName.toLowerCase().split(' ').join('_'));
+};
+
+export const removeDownloadedFile = (req, res) => {
+  const { downloadName } = req.body;
+  const filePath = `${getCurrentDir()}/../public/downloads/${downloadName}`;
+  fs.unlinkSync(filePath);
+  res.status(StatusCodes.OK).json({ msg: 'file deleted' });
 };

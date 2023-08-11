@@ -7,6 +7,7 @@ import customRequest from '../../../utils/customRequest';
 import { toast } from 'react-toastify';
 
 const Login = () => {
+  const isDarkTheme = localStorage.getItem('darkTheme') === 'true';
   const navigate = useNavigate();
 
   const loginDemoUser = async () => {
@@ -27,7 +28,7 @@ const Login = () => {
   return (
     <Wrapper>
       <Form method="post" className="form">
-        <Logo />
+        <Logo src={isDarkTheme ? '/logo_white.png' : '/logo_black.png'} />
         <h4>Login Page</h4>
         <FormRow type="email" name="email" />
         <FormRow type="password" name="password" />

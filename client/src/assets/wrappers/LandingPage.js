@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 const Wrapper = styled.section`
   .logo {
-    /* padding-top: 12px; */
-    /* height: var(--nav-height); */
-    max-height: 100%;
+    max-height: auto;
     max-width: 100%;
+    grid-column: 1/2;
+    grid-row: 1/2;
   }
   nav {
     width: var(--fluid-width);
@@ -18,9 +18,10 @@ const Wrapper = styled.section`
   .page {
     min-height: calc(100vh - var(--nav-height));
     display: grid;
-    grid-template-rows: 1fr 500px;
-    align-items: start;
+    grid-template-rows: auto;
+    align-items: center;
     margin-top: 2rem;
+    margin: 0 auto;
   }
   h1 {
     font-weight: 1000;
@@ -30,8 +31,6 @@ const Wrapper = styled.section`
   }
   span {
     color: var(--primary-500);
-    /* padding-left: 0.5rem; */
-    /* padding-left: calc(100vw - 75%); */
     font-weight: 1000;
     font-size: 28px;
   }
@@ -53,13 +52,20 @@ const Wrapper = styled.section`
   .info {
     width: max-content;
     margin: 4rem 1rem;
+    grid-column: 1/2;
+    grid-row: 2/3;
   }
   @media (min-width: 1100px) {
     .page {
-      grid-template-columns: 1fr 500px;
+      grid-template-columns: 1fr 1fr;
     }
-    .main-img {
-      display: block;
+    .logo {
+      grid-column: 2/3;
+      grid-row: 1/2;
+    }
+    .info {
+      grid-column: 1/2;
+      grid-row: 1/2;
     }
   }
 `;

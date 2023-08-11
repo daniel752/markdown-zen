@@ -26,6 +26,14 @@ const Wrapper = styled.article`
     color: var(--white);
     margin-right: 2rem;
   }
+  .post-info-btn {
+    height: 30px;
+    font-size: 0.85rem;
+    display: flex;
+    -moz-box-align: center;
+    align-items: center;
+    margin: 0 1rem;
+  }
   .info {
     line-height: 1.25rem;
     h5 {

@@ -26,10 +26,13 @@ const Wrapper = styled.section`
     row-gap: 1rem;
   }
   .form-btn {
-    align-self: end;
-    margin-top: 2rem;
     display: grid;
     place-items: center;
+    margin: 2rem auto;
+    width: 30rem;
+  }
+  .profile-btn {
+    margin: 2rem 0;
   }
   .avatar {
     width: 25%;

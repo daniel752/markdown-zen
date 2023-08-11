@@ -5,10 +5,11 @@ import FormRow from '../components/FormRow';
 import SubmitBtn from '../components/SubmitBtn';
 
 const Register = () => {
+  const isDarkTheme = localStorage.getItem('darkTheme') === 'true';
   return (
     <Wrapper>
       <Form method="post" className="form">
-        <Logo />
+        <Logo src={isDarkTheme ? '/logo_white.png' : '/logo_black.png'} />
         <h4>Register Page</h4>
         <FormRow type="text" name="firstName" labelText="First Name"></FormRow>
         <FormRow type="text" name="lastName" labelText="Last Name"></FormRow>

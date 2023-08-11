@@ -64,13 +64,23 @@ const Post = ({
           <PostInfo icon={<FaCalendarAlt />} text={createdAt} />
         </div>
         <footer className="actions">
-          <Link to={`../edit-post/${_id}`} className="btn edit-btn">
+          <Link to={`../edit-post/${_id}`} className="btn post-info-btn">
             Edit
           </Link>
           <Form method="post" action={`../delete-post/${_id}`}>
-            <button type="submit" className="btn delete-btn">
+            <button type="submit" className="btn post-info-btn">
               Delete
             </button>
+          </Form>
+          <Form method="post" action={`../download-post`}>
+            <button type="submit" className="btn post-info-btn">
+              Export
+            </button>
+            <input
+              type="hidden"
+              name="markdown"
+              value={JSON.stringify({ title, content })}
+            />
           </Form>
         </footer>
       </div>

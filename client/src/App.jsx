@@ -21,6 +21,7 @@ import {
   editPostAction,
   deletePostAction,
   updateUserAction,
+  downloadPostAction,
 } from './utils/actionsUtils.js';
 import {
   adminLoader,
@@ -97,6 +98,10 @@ const router = createBrowserRouter([
           {
             path: 'delete-post/:id',
             action: deletePostAction,
+          },
+          {
+            path: 'download-post',
+            action: downloadPostAction,
           },
         ],
       },

@@ -5,6 +5,8 @@ import main from '../assets/images/main.svg';
 import { Link } from 'react-router-dom';
 
 const Landing = () => {
+  const isDarkTheme = localStorage.getItem('darkTheme') === 'true';
+
   return (
     <Wrapper>
       <div className="container page">
@@ -31,7 +33,7 @@ const Landing = () => {
             Login / Demo User
           </Link>
         </div>
-        <Logo />
+        <Logo src={isDarkTheme ? '/logo_white.png' : '/logo_black.png'} />
       </div>
     </Wrapper>
   );

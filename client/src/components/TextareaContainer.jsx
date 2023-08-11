@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import MarkdownEditor from '@uiw/react-markdown-editor';
-import { useDashboardContext } from '../pages/DashboardLayout';
 
 const TextareaContainer = ({ defaultValue = '' }) => {
   const [mdContent, setMdContent] = useState(defaultValue);

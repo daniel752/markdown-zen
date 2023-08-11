@@ -97,3 +97,37 @@ export const updateUserAction = async ({ request }) => {
 
   return null;
 };
+
+export const downloadPostAction = async ({ request }) => {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+  const { markdown } = data;
+  const { title } = JSON.parse(markdown);
+  const downloadName = `${title.toLowerCase().split(' ').join('_')}.md`;
+  try {
+    const response = await customRequest.post('posts/download-post', data, {
+      responseType: 'blob', // Indicate that the response is a binary blob
+    });
+    console.log(response);
+    // Create a blob URL from the response
+    const blob = new Blob([response.data], { type: 'text/markdown' });
+    const blobUrl = URL.createObjectURL(blob);
+
+    // Create a temporary anchor element to trigger the download
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = downloadName; // Set the desired filename
+    link.click();
+
+    // Clean up the blob URL
+    URL.revokeObjectURL(blobUrl);
+
+    toast.success('Post downloaded');
+    await customRequest.post('posts/remove-downloaded-file', { downloadName });
+
+    return redirect('/dashboard/all-posts');
+  } catch (error) {
+    toast.error(error?.response?.data?.mgs);
+    return error;
+  }
+};

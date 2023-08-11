@@ -11,6 +11,8 @@ import {
   deletePost,
   getUserPosts,
   getPostStats,
+  downloadPost,
+  removeDownloadedFile,
 } from '../controllers/PostController.js';
 import { checkForTestUser } from '../middleware/AuthMiddleware.js';
 
@@ -22,6 +24,8 @@ router
   .post(checkForTestUser, validatePostInput, addPost);
 
 router.route('/stats').get(getPostStats);
+router.route('/download-post').post(downloadPost);
+router.route('/remove-downloaded-file').post(removeDownloadedFile);
 
 router
   .route('/:id')

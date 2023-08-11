@@ -6,12 +6,10 @@ const Wrapper = styled.section`
     grid-template-columns: 1fr;
   }
   .dashboard-page {
-    width: 100%;
-    /* margin: 0 auto; */
+    margin: 0 auto;
     padding: 2rem 0 0 0;
     margin-left: 2.25rem;
-    width: 97%;
-    max-width: 97%;
+    max-width: 96%;
   }
   @media (min-width: 992px) {
     .dashboard {
