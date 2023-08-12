@@ -17,7 +17,7 @@ const Wrapper = styled.section`
     width: 100%;
   }
   .form-row {
-    margin-bottom: 0;
+    /* margin-bottom: 0; */
     max-width: 35rem;
   }
   .form-center {
@@ -28,25 +28,54 @@ const Wrapper = styled.section`
   .form-btn {
     display: grid;
     place-items: center;
-    margin: 2rem auto;
+    margin: 0.5rem auto;
     width: 30rem;
   }
   .profile-btn {
     margin: 2rem 0;
   }
   .avatar {
-    width: 25%;
+    width: 35%;
     height: auto;
     margin: 0 auto;
   }
-  .multi-select {
-    max-width: 100%;
-    span {
-      color: var(--text-color);
+  .multi-input {
+    p {
+      font-size: var(--small-text);
+      color: rgba(0, 0, 0, 0.6);
+      margin-bottom: 0.4rem;
     }
+  }
+  .tag {
+    margin: 0.5rem 0.5rem 0.5rem 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .tag-remove-btn {
+    margin-left: 0.3rem;
+    border: transparent;
+    background-color: transparent;
+    margin: 0.5rem 0.5rem 0.5rem 0.25rem;
+    display: grid;
+    align-content: center;
+    grid-template-columns: 1fr auto;
+    /* column-gap: 0.2rem; */
+    margin-left: 0.1rem;
+    font-weight: 900;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .tags-container {
+    display: flex;
+    flex-direction: row;
+    padding: 0 0.2rem;
+    max-width: 70rem;
+    flex-wrap: wrap;
   }
   .markdown-container {
     margin: 2rem 0;
+    max-width: 100%;
     h5 {
       margin-bottom: 1rem;
     }
@@ -92,11 +121,10 @@ const Wrapper = styled.section`
     font-weight: bold;
   }
   .cm-editor {
-    height: 100vh;
+    height: 40rem;
+    width: auto;
   }
   @media (min-width: 992px) {
-    width: 100%;
-
     .profile-form {
       display: grid;
       grid-template-columns: 0.5fr 1fr;

@@ -37,9 +37,8 @@ export const addPostAction = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
   console.log(data);
-  data.tags = JSON.parse(data.tags);
-  data.categories = JSON.parse(data.categories);
-  // console.log(JSON.parse(data.tags));
+  data.categories = data.categories.split(',');
+  data.tags = data.tags.split(',');
 
   try {
     await customRequest.post('/posts', data);
@@ -55,8 +54,9 @@ export const editPostAction = async ({ request, params }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
 
-  data.categories = JSON.parse(data.categories);
-  data.tags = JSON.parse(data.tags);
+  data.categories = data.categories.split(',');
+  data.tags = data.tags.split(',');
+  console.log(data);
 
   try {
     await customRequest.patch(`/posts/${params.id}`, data);

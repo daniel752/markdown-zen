@@ -23,13 +23,13 @@ const Post = ({
   categories,
   tags,
   content,
-  likes,
   comments,
-  views,
   status,
   createdAt,
 }) => {
   const data = day(createdAt).format('MMM Do, YYYY');
+  const commentsLimit = 3;
+  const tagsLimit = 5;
 
   return (
     <Wrapper>
@@ -38,7 +38,15 @@ const Post = ({
         <div className="info">
           <h5>{title}</h5>
           <h6 className="category-text">{categories[0]}</h6>
-          {`#${tags[0]}...`}
+          {tags?.length > 0
+            ? tags.map((tag, index) =>
+                index < tagsLimit ? (
+                  <span key={tag}>
+                    {index < tagsLimit - 1 ? `#${tag}, ` : `#${tag}`}
+                  </span>
+                ) : null,
+              )
+            : null}
           <div className="markdown-small-container">
             <ReactMarkdown remarkPlugins={[gfm, remarkEmoji]}>
               {`${content.slice(0, 100)}...`}
@@ -51,18 +59,20 @@ const Post = ({
           <PostInfo
             icon={<BsFillChatLeftTextFill />}
             text={
-              comments.length > 3
-                ? `${comments.slice(0, 3).join(', ')}...`
-                : comments.join(', ')
+              comments?.length > 0
+                ? comments.map((comment, index) =>
+                    index < commentsLimit ? (
+                      <div className="comment-item" key={comment}>
+                        <span>*</span>
+                        <p>{comment}</p>
+                      </div>
+                    ) : null,
+                  )
+                : null
             }
           />
-          <PostInfo icon={<BsFillChatLeftHeartFill />} text={likes} />
-          <PostInfo icon={<BsFillEyeFill />} text={views} />
-          <div className={`status ${status.toLowerCase()}`}>
-            {status.toLowerCase()}
-          </div>
-          <PostInfo icon={<FaCalendarAlt />} text={createdAt} />
         </div>
+        <PostInfo icon={<FaCalendarAlt />} text={createdAt} />
         <footer className="actions">
           <Link to={`../edit-post/${_id}`} className="btn post-info-btn">
             Edit
@@ -82,6 +92,7 @@ const Post = ({
               value={JSON.stringify({ title, content })}
             />
           </Form>
+          <div className={`status ${status}`}>{status}</div>
         </footer>
       </div>
     </Wrapper>

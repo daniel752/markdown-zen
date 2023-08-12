@@ -1,4 +1,3 @@
-import { allPostsLoader } from '../utils/loadersUtils';
 import { SearchContainer, PostsContainer } from '../components';
 import { createContext, useContext } from 'react';
 import { useLoaderData } from 'react-router-dom';

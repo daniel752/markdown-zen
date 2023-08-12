@@ -1,13 +1,13 @@
 import {
   FormRow,
-  FormRowMultiSelect,
   FormRowSelect,
   SubmitBtn,
+  MultipleInput,
 } from '../components';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { useLoaderData } from 'react-router-dom';
-import { STATUS, CATEGORY, TAG } from '../../../utils/constants';
-import { Form, useNavigation } from 'react-router-dom';
+import { STATUS } from '../../../utils/constants';
+import { Form } from 'react-router-dom';
 import TextareaContainer from '../components/TextareaContainer';
 
 const EditPost = () => {
@@ -25,22 +25,17 @@ const EditPost = () => {
             labelText="title"
             defaultValue={title}
           />
-          <FormRowMultiSelect
+          <MultipleInput
+            label="categories (1-3)"
+            placeholder="enter..."
             name="categories"
-            labelText="categories"
-            list={CATEGORY}
+            defaultValues={categories}
           />
-          <FormRowMultiSelect
+          <MultipleInput
+            label="tags (0-20)"
+            placeholder="enter..."
             name="tags"
-            labelText="tags"
-            list={TAG}
-            defaultValue={tags.map(item => {
-              return {
-                label: item,
-                value: item,
-              };
-            })}
-            isMultipleSelect={true}
+            defaultValues={tags}
           />
           <FormRowSelect
             name="status"

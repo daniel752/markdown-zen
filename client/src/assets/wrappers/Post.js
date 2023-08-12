@@ -63,6 +63,20 @@ const Wrapper = styled.article`
       grid-template-columns: 1fr 1fr;
     } */
   }
+  /* .comments-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  } */
+  .comment-item {
+    font-size: var(--small-text);
+    display: grid;
+    grid-template-columns: auto 1fr;
+
+    span {
+      font-weight: 900;
+    }
+  }
   .status {
     border-radius: var(--border-radius);
     text-transform: capitalize;
@@ -72,6 +86,7 @@ const Wrapper = styled.article`
     height: 30px;
     display: grid;
     align-items: center;
+    margin: 0 auto;
   }
   .actions {
     margin-top: 1rem;
