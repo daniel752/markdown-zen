@@ -13,7 +13,8 @@ export const getAllPosts = async (req, res) => {
 };
 
 export const getUserPosts = async (req, res) => {
-  const { title, status, categories, sort } = req.query;
+  const { title, status, categories, tags, sort } = req.query;
+  console.log(req.query);
   const queryObj = {
     author: req.user.userId,
   };
@@ -22,6 +23,7 @@ export const getUserPosts = async (req, res) => {
   }
   if (status && status !== 'all') queryObj.status = status;
   if (categories && categories !== 'all') queryObj.categories = categories;
+  if (tags && tags !== 'all') queryObj.tags = tags;
 
   const sortOptions = {
     newest: '-createdAt',

@@ -5,8 +5,7 @@ import {
   UnauthenticatedError,
   UnauthorizedError,
 } from '../errors/CustomErrors.js';
-import { MongoUnexpectedServerResponseError } from 'mongodb';
-import { CATEGORY, STATUS, TAG } from '../utils/constants.js';
+import { STATUS } from '../utils/constants.js';
 import mongoose from 'mongoose';
 import { param } from 'express-validator';
 import PostModel from '../models/PostModel.js';
@@ -33,10 +32,6 @@ const withValidationErrors = validateValues => {
 };
 
 export const validatePostInput = withValidationErrors([
-  // body('author')
-  //     .notEmpty().withMessage('Author is required')
-  //     .isLength({ min: 2, max: 50 }).withMessage('Author must be between 2 and 50 characters long')
-  //     .trim(),
   body('title')
     .notEmpty()
     .withMessage('Title is required')
@@ -52,15 +47,6 @@ export const validatePostInput = withValidationErrors([
   body('categories')
     .isArray({ min: 1, max: 3 })
     .withMessage('Number of categories must be between 1 and 3'),
-  // body('likes')
-  //     .notEmpty().withMessage('Likes count is required')
-  //     .isInt({ min: 0 }).withMessage('Likes count must be a non-negative integer'),
-  // body('comments')
-  //     .optional({ checkFalsy: true })
-  //     .isArray().withMessage('Comments must be an array'),
-  // body('views')
-  //     .notEmpty().withMessage('Views count is required')
-  //     .isInt({ min: 0 }).withMessage('Views count must be a non-negative integer'),
   body('status')
     .notEmpty()
     .withMessage('Post status is required')

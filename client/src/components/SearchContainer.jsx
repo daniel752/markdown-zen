@@ -1,13 +1,12 @@
-import { FormRow, FormRowSelect, SubmitBtn } from '.';
+import { FormRow, FormRowSelect, SubmitBtn, MultipleInput } from '.';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { Form, useSubmit, Link } from 'react-router-dom';
-import { CATEGORY, STATUS, POST_SORT_BY } from '../../../utils/constants';
+import { STATUS, POST_SORT_BY } from '../../../utils/constants';
 import { useAllPostsContext } from '../pages/AllPosts';
-import { makeUnderscoreSpace } from '../utils/formatsUtils';
 
 const SearchContainer = () => {
   const { searchValues } = useAllPostsContext();
-  const { title, categories, status, sort } = searchValues;
+  const { title, categories, tags, status, sort } = searchValues;
   const submit = useSubmit();
 
   const debounce = onChange => {
@@ -19,6 +18,11 @@ const SearchContainer = () => {
         onChange(form);
       }, 1500);
     };
+  };
+
+  const handleMultipleInputChange = (name, updatedValue) => {
+    const updatedSearchValues = { ...searchValues, [name]: updatedValue };
+    submit(updatedSearchValues);
   };
 
   return (
@@ -34,39 +38,49 @@ const SearchContainer = () => {
               submit(form);
             })}
           />
-          <FormRowSelect
-            name="category"
-            labelText="category"
-            list={[
-              'all',
-              ...Object.values(CATEGORY).map(category => {
-                return makeUnderscoreSpace(category);
-              }),
-            ]}
-            defaultValue={categories}
-            onChange={event => {
-              submit(event.currentTarget.form);
-            }}
+          <MultipleInput
+            label="categories (1-3)"
+            placeholder="enter..."
+            name="categories"
+            defaultValues={categories}
+            onChange={debounce(form => {
+              submit(form);
+            })}
+            onValueRemove={updatedValues =>
+              handleMultipleInputChange('categories', updatedValues)
+            }
+          />
+          <MultipleInput
+            label="tags (0-20)"
+            placeholder="enter..."
+            name="tags"
+            defaultValues={tags}
+            onChange={debounce(form => {
+              submit(form);
+            })}
+            onValueRemove={updatedValues =>
+              handleMultipleInputChange('tags', updatedValues)
+            }
           />
           <FormRowSelect
             name="status"
             labelText="status"
             list={['all', ...Object.values(STATUS)]}
             defaultValue={status}
-            onChange={event => {
-              submit(event.currentTarget.form);
-            }}
+            onChange={debounce(form => {
+              submit(form);
+            })}
           />
           <FormRowSelect
             name="sort"
             labelText="sort"
             list={['all', ...Object.keys(POST_SORT_BY)]}
             defaultValue={sort}
-            onChange={event => {
-              submit(event.currentTarget.form);
-            }}
+            onChange={debounce(form => {
+              submit(form);
+            })}
           />
-          {/* <SubmitBtn formBtn /> */}
+          <SubmitBtn formBtn />
         </div>
         <Link
           to="/dashboard/all-posts"

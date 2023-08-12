@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { CATEGORY, TAG, STATUS } from '../utils/constants.js';
 
 const PostSchema = new mongoose.Schema(
   {
@@ -11,9 +10,7 @@ const PostSchema = new mongoose.Schema(
     categories: { type: [String] },
     tags: { type: [String] },
     content: { type: String },
-    likes: { type: Number, default: 0 },
     comments: { type: [String], default: [] },
-    views: { type: Number, default: 0 },
     status: { type: String },
   },
   { timestamps: true },
