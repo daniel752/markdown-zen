@@ -10,6 +10,11 @@ import { STATUS } from '../../../utils/constants';
 import { Form } from 'react-router-dom';
 import TextareaContainer from '../components/TextareaContainer';
 
+const checkEmptyArray = array => {
+  if (array[0] === '') return undefined;
+  return array;
+};
+
 const EditPost = () => {
   const { post } = useLoaderData();
   const { title, categories, tags, content, status } = post;
@@ -29,13 +34,13 @@ const EditPost = () => {
             label="categories (1-3)"
             placeholder="enter..."
             name="categories"
-            defaultValues={categories}
+            defaultValues={checkEmptyArray(categories)}
           />
           <MultipleInput
             label="tags (0-20)"
             placeholder="enter..."
             name="tags"
-            defaultValues={tags}
+            defaultValues={checkEmptyArray(tags)}
           />
           <FormRowSelect
             name="status"

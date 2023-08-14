@@ -29,7 +29,7 @@ const Post = ({
 }) => {
   const data = day(createdAt).format('MMM Do, YYYY');
   const commentsLimit = 3;
-  const tagsLimit = 5;
+  const tagsLimit = tags.length < 5 ? tags.length : 5;
 
   return (
     <Wrapper>
@@ -40,13 +40,15 @@ const Post = ({
           <h6 className="category-text">{categories[0]}</h6>
           {tags?.length > 0
             ? tags.map((tag, index) =>
-                index < tagsLimit ? (
+                tag !== '' && index < tagsLimit ? (
                   <span key={tag}>
                     {index < tagsLimit - 1 ? `#${tag}, ` : `#${tag}`}
                   </span>
-                ) : null,
+                ) : (
+                  ''
+                ),
               )
-            : null}
+            : ''}
           <div className="markdown-small-container">
             <ReactMarkdown remarkPlugins={[gfm, remarkEmoji]}>
               {`${content.slice(0, 100)}...`}

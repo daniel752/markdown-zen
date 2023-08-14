@@ -16,7 +16,11 @@ const Register = () => {
         <FormRow type="text" name="location"></FormRow>
         <FormRow type="email" name="email"></FormRow>
         <FormRow type="password" name="password"></FormRow>
-        <FormRow type="password" name="passwordConfirm"></FormRow>
+        <FormRow
+          type="password"
+          name="passwordConfirm"
+          labelText="password confirm"
+        ></FormRow>
         <SubmitBtn />
         <p>
           Already a member?

@@ -17,7 +17,6 @@ const Wrapper = styled.section`
     width: 100%;
   }
   .form-row {
-    /* margin-bottom: 0; */
     max-width: 35rem;
   }
   .form-center {
@@ -30,9 +29,6 @@ const Wrapper = styled.section`
     place-items: center;
     margin: 0.5rem auto;
     width: 30rem;
-  }
-  .profile-btn {
-    margin: 2rem 0;
   }
   .avatar {
     width: 35%;
@@ -60,7 +56,6 @@ const Wrapper = styled.section`
     display: grid;
     align-content: center;
     grid-template-columns: 1fr auto;
-    /* column-gap: 0.2rem; */
     margin-left: 0.1rem;
     font-weight: 900;
     font-size: 15px;
@@ -124,10 +119,11 @@ const Wrapper = styled.section`
     height: 40rem;
     width: auto;
   }
-  @media (min-width: 992px) {
+  @media (min-width: 690px) {
     .profile-form {
       display: grid;
-      grid-template-columns: 0.5fr 1fr;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
     }
   }
 `;

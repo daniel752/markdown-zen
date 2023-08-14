@@ -5,7 +5,6 @@ import { redirect } from 'react-router-dom';
 export const dashboardLoader = async () => {
   try {
     const { data } = await customRequest.get('/users/current-user');
-    console.log(data);
     return data;
   } catch (error) {
     return redirect('/');
@@ -17,7 +16,6 @@ export const allPostsLoader = async ({ request }) => {
     const params = Object.fromEntries([
       ...new URL(request.url).searchParams.entries(),
     ]);
-    console.log(params);
     const { data } = await customRequest.get('/posts', { params });
     return {
       data,

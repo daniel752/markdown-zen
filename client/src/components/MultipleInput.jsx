@@ -5,8 +5,8 @@ const MultipleInput = ({
   placeholder,
   name,
   defaultValues = [],
-  onChange,
-  onValueRemove,
+  onChange = null,
+  onValueRemove = null,
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [values, setValues] = useState(defaultValues);
@@ -16,18 +16,19 @@ const MultipleInput = ({
   };
 
   const handleInputKeyDown = event => {
+    console.log(values);
     if (event.key === 'Enter' && inputValue.trim() !== '') {
       setValues([...values, inputValue.trim()]);
       setInputValue('');
       event.preventDefault();
-      onChange(event);
+      if (onChange) onChange(event);
     }
   };
 
   const handleValueRemove = valueToRemove => {
     const updatedValues = values.filter(value => value !== valueToRemove);
     setValues(updatedValues);
-    onValueRemove(updatedValues);
+    if (onValueRemove) onValueRemove(updatedValues);
   };
 
   const handleBlur = () => {
@@ -57,7 +58,7 @@ const MultipleInput = ({
         />
       </div>
       <div className="tags-container">
-        {values?.length > 0
+        {values?.length > 0 && values[0] !== ''
           ? values.map((value, index) => (
               <div key={index} className="tag">
                 {value}
