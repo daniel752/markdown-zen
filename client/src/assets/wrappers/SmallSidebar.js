@@ -67,5 +67,9 @@ const Wrapper = styled.aside`
   .active {
     color: var(--primary-500);
   }
+  .logo {
+    width: 20rem;
+    height: auto;
+  }
 `;
 export default Wrapper;

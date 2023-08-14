@@ -28,6 +28,8 @@ const Wrapper = styled.nav`
   }
   .logo {
     display: none;
+    width: 25rem;
+    height: auto;
   }
   .btn-container {
     display: flex;

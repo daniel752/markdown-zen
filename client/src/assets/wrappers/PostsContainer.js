@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.section`
-  margin-top: 3rem;
+  margin-top: 2rem;
   h2 {
     text-transform: none;
   }
   & > h5 {
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    padding: 0 0 1rem 1rem;
   }
   .posts {
     display: grid;

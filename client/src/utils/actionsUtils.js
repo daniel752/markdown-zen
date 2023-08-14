@@ -36,10 +36,8 @@ export const loginAction = async ({ request }) => {
 export const addPostAction = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
-  console.log(data);
   data.categories = data.categories.split(',');
-  data.tags = data.tags.split(',');
-
+  if (data.tags) data.tags = data.tags.split(',');
   try {
     await customRequest.post('/posts', data);
     toast.success(`Added Post ${data.title} to your posts`);
