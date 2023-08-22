@@ -38,6 +38,15 @@ const SearchContainer = () => {
               submit(form);
             })}
           />
+          <FormRowSelect
+            name="status"
+            labelText="status"
+            list={['all', ...Object.values(STATUS)]}
+            defaultValue={status}
+            onChange={debounce(form => {
+              submit(form);
+            })}
+          />
           <MultipleInput
             label="categories (1-3)"
             placeholder="enter..."
@@ -61,15 +70,6 @@ const SearchContainer = () => {
             onValueRemove={updatedValues =>
               handleMultipleInputChange('tags', updatedValues)
             }
-          />
-          <FormRowSelect
-            name="status"
-            labelText="status"
-            list={['all', ...Object.values(STATUS)]}
-            defaultValue={status}
-            onChange={debounce(form => {
-              submit(form);
-            })}
           />
           <FormRowSelect
             name="sort"

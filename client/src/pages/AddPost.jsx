@@ -5,10 +5,11 @@ import { STATUS } from '../../../utils/constants';
 // import MarkdownContainer from '../components/MarkdownContainer';
 import TextareaContainer from '../components/TextareaContainer';
 import MultipleInput from '../components/MultipleInput';
+import customRequest from '../../../utils/customRequest';
+import { toast } from 'react-toastify';
+import CollaboratorsContainer from '../components/CollaboratorsContainer';
 
 const AddPost = () => {
-  // const { user } = useOutletContext();
-
   return (
     <Wrapper>
       <Form method="post" className="form">
@@ -30,6 +31,7 @@ const AddPost = () => {
             placeholder="enter..."
             name="tags"
           />
+          <CollaboratorsContainer />
         </div>
         <TextareaContainer />
         <SubmitBtn formBtn="form-btn center" />

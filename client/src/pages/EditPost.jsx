@@ -9,6 +9,7 @@ import { useLoaderData } from 'react-router-dom';
 import { STATUS } from '../../../utils/constants';
 import { Form } from 'react-router-dom';
 import TextareaContainer from '../components/TextareaContainer';
+import CollaboratorsContainer from '../components/CollaboratorsContainer';
 
 const checkEmptyArray = array => {
   if (array[0] === '') return undefined;
@@ -17,7 +18,7 @@ const checkEmptyArray = array => {
 
 const EditPost = () => {
   const { post } = useLoaderData();
-  const { title, categories, tags, content, status } = post;
+  const { title, categories, tags, content, status, collaborators } = post;
 
   return (
     <Wrapper>
@@ -29,6 +30,12 @@ const EditPost = () => {
             name="title"
             labelText="title"
             defaultValue={title}
+          />
+          <FormRowSelect
+            name="status"
+            labelText="status"
+            list={Object.values(STATUS)}
+            defaultValue={status}
           />
           <MultipleInput
             label="categories (1-3)"
@@ -42,12 +49,7 @@ const EditPost = () => {
             name="tags"
             defaultValues={checkEmptyArray(tags)}
           />
-          <FormRowSelect
-            name="status"
-            labelText="status"
-            list={Object.values(STATUS)}
-            defaultValue={status}
-          />
+          <CollaboratorsContainer defaultValues={collaborators} />
           <TextareaContainer defaultValue={content} />
           <SubmitBtn formBtn="form-btn" submitText="submit" />
         </div>

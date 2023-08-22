@@ -3,11 +3,20 @@ import UserModel from '../models/UserModel.js';
 import PostModel from '../models/PostModel.js';
 import cloudinary from 'cloudinary';
 import { promises as fs } from 'fs';
+import { NotFoundError } from '../errors/CustomErrors.js';
 
 export const getCurrentUser = async (req, res) => {
   const currentUser = await UserModel.findById(req.user.userId);
   const userWithoutPassword = currentUser.toJSON();
   res.status(StatusCodes.OK).json({ user: userWithoutPassword });
+};
+
+export const getUser = async (req, res) => {
+  console.log(req.body.collabEmail);
+  const user = await UserModel.findOne({ email: req.body.collabEmail });
+  if (!user)
+    throw new NotFoundError(`user ${req.body.collabEmail} doesn't exists`);
+  res.status(StatusCodes.OK).json({ user });
 };
 
 export const getApplicationStats = async (req, res) => {

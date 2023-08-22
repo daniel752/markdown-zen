@@ -26,6 +26,7 @@ const Post = ({
   comments,
   status,
   createdAt,
+  isEditable = false,
 }) => {
   const data = day(createdAt).format('MMM Do, YYYY');
   const commentsLimit = 3;
@@ -76,14 +77,18 @@ const Post = ({
         </div>
         <PostInfo icon={<FaCalendarAlt />} text={createdAt} />
         <footer className="actions">
-          <Link to={`../edit-post/${_id}`} className="btn post-info-btn">
-            Edit
-          </Link>
-          <Form method="post" action={`../delete-post/${_id}`}>
-            <button type="submit" className="btn post-info-btn">
-              Delete
-            </button>
-          </Form>
+          {isEditable ? (
+            <>
+              <Link to={`../edit-post/${_id}`} className="btn post-info-btn">
+                Edit
+              </Link>
+              <Form method="post" action={`../delete-post/${_id}`}>
+                <button type="submit" className="btn post-info-btn">
+                  Delete
+                </button>
+              </Form>
+            </>
+          ) : null}
           <Form method="post" action={`../download-post`}>
             <button type="submit" className="btn post-info-btn">
               Export

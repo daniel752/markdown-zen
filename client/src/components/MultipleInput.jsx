@@ -5,8 +5,11 @@ const MultipleInput = ({
   placeholder,
   name,
   defaultValues = [],
-  onChange = null,
-  onValueRemove = null,
+  onChange = null, // In case parent compnent needs to handle onChange event
+  onValueRemove = null, // In case parent component needs to update when a value is removed
+  inputVerifier = null, // Verifies every input in parent component after the 'enter' key is pressed and value is not empty
+  showValues = true,
+  isRemoveOnBlur = true,
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [values, setValues] = useState(defaultValues);
@@ -16,8 +19,11 @@ const MultipleInput = ({
   };
 
   const handleInputKeyDown = event => {
-    console.log(values);
     if (event.key === 'Enter' && inputValue.trim() !== '') {
+      if (inputVerifier && !inputVerifier(inputValue)) {
+        console.log("user doesn't exists");
+        return;
+      }
       setValues([...values, inputValue.trim()]);
       setInputValue('');
       event.preventDefault();
@@ -32,7 +38,7 @@ const MultipleInput = ({
   };
 
   const handleBlur = () => {
-    if (inputValue.trim() !== '') {
+    if (isRemoveOnBlur && inputValue.trim() !== '') {
       setValues([...values, inputValue.trim()]);
       setInputValue('');
     }
@@ -42,11 +48,9 @@ const MultipleInput = ({
     <div className="multi-input">
       <div className="form-row">
         <label htmlFor={name} className="form-label">
-          {label}
+          {name || label}
         </label>
-        <p className="input-helper">
-          press enter after each {name === 'tags' ? 'tag' : 'category'}
-        </p>
+        <p className="input-helper">press enter after each value</p>
         <input
           type="text"
           className="form-input"
@@ -58,7 +62,7 @@ const MultipleInput = ({
         />
       </div>
       <div className="tags-container">
-        {values?.length > 0 && values[0] !== ''
+        {showValues && values?.length > 0 && values[0] !== ''
           ? values.map((value, index) => (
               <div key={index} className="tag">
                 {value}

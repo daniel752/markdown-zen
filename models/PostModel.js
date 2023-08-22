@@ -12,6 +12,11 @@ const PostSchema = new mongoose.Schema(
     content: { type: String },
     comments: { type: [String], default: [] },
     status: { type: String },
+    collaborators: {
+      type: [mongoose.Types.ObjectId],
+      ref: 'Collaborator',
+      default: [],
+    },
   },
   { timestamps: true },
 );
