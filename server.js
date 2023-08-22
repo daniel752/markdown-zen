@@ -40,14 +40,6 @@ app.use(cookieParser());
 // Making Express app to use 'ErrorHandlerMiddleware' for errors
 app.use(ErrorHandlerMiddleware);
 
-app.get('/', (req, res) => {
-  res.send('Hello');
-});
-
-app.get('/api/v1/test', (req, res) => {
-  res.json({ msg: `hello` });
-});
-
 app.use('/api/v1/posts', authenticateUser, PostRouter);
 app.use('/api/v1/auth', AuthRouter);
 app.use('/api/v1/users', authenticateUser, UserRouter);
