@@ -21,7 +21,6 @@ const EditPost = () => {
   const { post } = useLoaderData();
   const { title, categories, tags, content, status, collaborators } = post;
   const isOwner = () => {
-    console.log(user._id === post.author);
     return user._id === post.author;
   };
 

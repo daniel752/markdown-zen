@@ -17,7 +17,6 @@ export const allPostsLoader = async ({ request }) => {
       ...new URL(request.url).searchParams.entries(),
     ]);
     const { data } = await customRequest.get('/posts', { params });
-    console.log(data);
     return {
       data,
       searchValues: { ...params },

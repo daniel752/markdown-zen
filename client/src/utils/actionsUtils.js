@@ -50,14 +50,12 @@ export const addPostAction = async ({ request }) => {
 };
 
 export const editPostAction = async ({ request, params }) => {
-  console.log(request);
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
 
   data.categories = data.categories.split(',');
   if (data?.tags) data.tags = data.tags.split(',');
   if (data?.collaborators) data.collaborators = JSON.parse(data.collaborators);
-  console.log(data);
   try {
     await customRequest.patch(`/posts/${params.id}`, data);
     toast.success('Post updated');
@@ -108,7 +106,6 @@ export const downloadPostAction = async ({ request }) => {
     const response = await customRequest.post('posts/download-post', data, {
       responseType: 'blob', // Indicate that the response is a binary blob
     });
-    console.log(response);
     // Create a blob URL from the response
     const blob = new Blob([response.data], { type: 'text/markdown' });
     const blobUrl = URL.createObjectURL(blob);

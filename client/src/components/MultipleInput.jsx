@@ -23,7 +23,6 @@ const MultipleInput = ({
   const handleInputKeyDown = event => {
     if (event.key === 'Enter' && inputValue.trim() !== '') {
       if (inputVerifier && !inputVerifier(inputValue)) {
-        console.log("user doesn't exists");
         return;
       }
       setValues([...values, inputValue.trim()]);

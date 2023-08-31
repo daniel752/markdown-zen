@@ -58,7 +58,6 @@ export const getUserPosts = async (req, res) => {
       post.collaborators.map(collaborator => collaborator.toString()),
     )
     .flat();
-  console.log(collaboratorIds);
   const collaborationData = await CollaboratorModel.find({
     _id: { $in: collaborations },
   });
@@ -96,28 +95,9 @@ export const getPost = async (req, res) => {
   res.status(StatusCodes.OK).json({ post });
 };
 
-// const getCollaborators = async collaborators => {
-//   // Get post's collaborations document ids form DB
-//   const collaborationIds = await Promise.all(
-//     collaborators.map(async collaborator => {
-//       return await PostModel.findOne(
-//         { email: collaborator.email },
-//         'collaborators',
-//       );
-//     }),
-//   );
-//   const collaborationDocs = await Promise.all(
-//     collaborationIds.map(async collaborationId => {
-//       return await CollaboratorModel.findById(collaborationId);
-//     }),
-//   );
-//   return collaborationDocs;
-// };
-
 export const addPost = async (req, res) => {
   // Get data from request's body
   const data = req.body;
-  console.log(data);
   // If there are collaborators (users) then get their IDs
   if (data?.collaborators) {
     const userDocs = await Promise.all(
@@ -128,7 +108,6 @@ export const addPost = async (req, res) => {
         );
       }),
     );
-    console.log(userDocs);
     // Create new collaboration documents for every user
     const collaborations = await Promise.all(
       userDocs.map(async userDoc => {
@@ -144,7 +123,6 @@ export const addPost = async (req, res) => {
     // post collaborators only needs an array of collaboration ids
     data.collaborators = collaborations.map(collaboration => collaboration._id);
   }
-  console.log('data collaborators:', data.collaborators);
   // Making the user owner of the post
   data.author = req.user.userId;
   // Creating post in DB
@@ -155,7 +133,6 @@ export const addPost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
   const { id } = req.params;
-  console.log(req.body);
   if (req.body?.collaborators) {
     // If there are any collaborators, get current collaborators from request
     const currentCollaborators = await Promise.all(
@@ -178,7 +155,6 @@ export const updatePost = async (req, res) => {
         }
       }),
     );
-    console.log('current collaborators:', currentCollaborators);
     // const currentCollaborators = await getCollaborators(req.body.collaborators);
     // Get old post's collaborations from DB
     const postCollaborations = await PostModel.findById(id, 'collaborators');
@@ -219,7 +195,6 @@ export const updatePost = async (req, res) => {
     post.collaborators = currentCollaborators.map(
       collaborator => collaborator._id,
     );
-    console.log('post.collaborators:', post.collaborators);
     await post.save();
   } else {
     req.body.collaborators = [];
