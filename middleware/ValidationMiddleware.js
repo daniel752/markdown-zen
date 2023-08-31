@@ -80,7 +80,6 @@ export const validateIdParam = withValidationErrors([
       async collaborator => await CollaboratorModel.findById(collaborator),
     );
     const collaborators = await Promise.all(collaboratorPromises);
-    console.log(collaborators);
 
     const isCollaborator = collaborators.some(
       collaborator =>
