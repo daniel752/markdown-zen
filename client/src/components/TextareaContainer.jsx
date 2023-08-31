@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import MarkdownEditor from '@uiw/react-markdown-editor';
+import sanitizedMarkdown from '../utils/sanitizeUtils';
 
 const TextareaContainer = ({ defaultValue = '' }) => {
   const [mdContent, setMdContent] = useState(defaultValue);
@@ -14,7 +15,11 @@ const TextareaContainer = ({ defaultValue = '' }) => {
           setMdContent(value);
         }}
       />
-      <input type="hidden" name="content" value={mdContent} />
+      <input
+        type="hidden"
+        name="content"
+        value={sanitizedMarkdown(mdContent)}
+      />
     </div>
   );
 };

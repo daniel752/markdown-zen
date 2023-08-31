@@ -53,13 +53,15 @@ export const getUserPosts = async (req, res) => {
     .skip(skip)
     .limit(limit);
 
-  const collaboratorIds = posts.map(post =>
-    post.collaborators.map(collaborator => collaborator.toString()),
-  );
+  const collaboratorIds = posts
+    .map(post =>
+      post.collaborators.map(collaborator => collaborator.toString()),
+    )
+    .flat();
+  console.log(collaboratorIds);
   const collaborationData = await CollaboratorModel.find({
-    _id: { $in: collaboratorIds },
+    _id: { $in: collaborations },
   });
-
   const collaborators = [];
   const postsLen = posts.length;
   for (let i = 0; i < postsLen; i++) {
@@ -94,36 +96,57 @@ export const getPost = async (req, res) => {
   res.status(StatusCodes.OK).json({ post });
 };
 
+// const getCollaborators = async collaborators => {
+//   // Get post's collaborations document ids form DB
+//   const collaborationIds = await Promise.all(
+//     collaborators.map(async collaborator => {
+//       return await PostModel.findOne(
+//         { email: collaborator.email },
+//         'collaborators',
+//       );
+//     }),
+//   );
+//   const collaborationDocs = await Promise.all(
+//     collaborationIds.map(async collaborationId => {
+//       return await CollaboratorModel.findById(collaborationId);
+//     }),
+//   );
+//   return collaborationDocs;
+// };
+
 export const addPost = async (req, res) => {
   // Get data from request's body
   const data = req.body;
-  // If there are collaborators then get their IDs
+  console.log(data);
+  // If there are collaborators (users) then get their IDs
   if (data?.collaborators) {
-    const { collaborators } = data;
-    for (const key in collaborators) {
-      const userDoc = await UserModel.findOne(
-        {
-          email: collaborators[key].email,
-        },
-        '_id',
-      );
-      if (userDoc) {
-        const collaboratorId = userDoc._id.toString(); // Convert ObjectId to string
-        // Create a collaborator document
-        const collaborator = await CollaboratorModel.create({
-          user: collaboratorId,
-          hasEditPermission: collaborators[key].hasEditPermission,
+    const userDocs = await Promise.all(
+      data.collaborators.map(async collaborator => {
+        return await UserModel.findOne(
+          { email: collaborator.email },
+          '_id email',
+        );
+      }),
+    );
+    console.log(userDocs);
+    // Create new collaboration documents for every user
+    const collaborations = await Promise.all(
+      userDocs.map(async userDoc => {
+        return await CollaboratorModel.create({
+          user: userDoc._id, // user's id
+          hasEditPermission: data.collaborators.find(
+            // user's edit permission
+            collaborator => collaborator.email === userDoc.email,
+          ).hasEditPermission,
         });
-        collaborators[key] = collaborator;
-        // collaborators[key]._id = collaboratorId; // Store the collaborator's ID as a string
-      }
-    }
-    data.collaborators = collaborators;
+      }),
+    );
+    // post collaborators only needs an array of collaboration ids
+    data.collaborators = collaborations.map(collaboration => collaboration._id);
   }
+  console.log('data collaborators:', data.collaborators);
   // Making the user owner of the post
   data.author = req.user.userId;
-  // Extract the collaborator IDs as strings and store in the data
-  data.collaborators = data.collaborators.map(collaborator => collaborator._id);
   // Creating post in DB
   const post = await PostModel.create(data);
   // Returning the newly created post
@@ -132,13 +155,94 @@ export const addPost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
   const { id } = req.params;
+  console.log(req.body);
+  if (req.body?.collaborators) {
+    // If there are any collaborators, get current collaborators from request
+    const currentCollaborators = await Promise.all(
+      req.body.collaborators.map(async collaborator => {
+        if (collaborator.hasOwnProperty('_id')) {
+          return {
+            _id: collaborator._id,
+            user: collaborator.user,
+            hasEditPermission: collaborator.hasEditPermission,
+          };
+        } else {
+          const userDoc = await UserModel.findOne({
+            email: collaborator.email,
+          });
+          const newCollaborator = await CollaboratorModel.create({
+            user: userDoc._id,
+            hasEditPermission: collaborator.hasEditPermission,
+          });
+          return newCollaborator;
+        }
+      }),
+    );
+    console.log('current collaborators:', currentCollaborators);
+    // const currentCollaborators = await getCollaborators(req.body.collaborators);
+    // Get old post's collaborations from DB
+    const postCollaborations = await PostModel.findById(id, 'collaborators');
+    const oldCollaborations = postCollaborations.collaborators.map(
+      collaborator => {
+        // Return 'ObjectId' (MongoDB type) converted to string
+        return collaborator.toString();
+      },
+    );
+    oldCollaborations.map(async collaboration => {
+      // Check if collaborator is in current collaborators from request
+      const isCurrentCollaborator = currentCollaborators.some(
+        currentCollaborator =>
+          currentCollaborator._id.toString() === collaboration,
+      );
+      // If not remove collaboration from DB
+      if (!isCurrentCollaborator)
+        await CollaboratorModel.findByIdAndDelete(collaboration);
+    });
+    // Check if there are new collaborations
+    currentCollaborators.map(async currentCollaborator => {
+      const isNewCollaborator = oldCollaborations.every(
+        collaboration => collaboration !== currentCollaborator._id.toString(),
+      );
+      // If there is a new collaboration, create a new collaboration document in DB
+      if (isNewCollaborator)
+        await CollaboratorModel.create(currentCollaborator);
+      // If it's an old collaborator than update to current collaborator values
+      else
+        await CollaboratorModel.findByIdAndUpdate(currentCollaborator._id, {
+          hasEditPermission: currentCollaborator.hasEditPermission,
+        });
+    });
+
+    // Get post to be updated
+    const post = await PostModel.findById(id);
+    // Update post's collaborators with current collaborators document ids
+    post.collaborators = currentCollaborators.map(
+      collaborator => collaborator._id,
+    );
+    console.log('post.collaborators:', post.collaborators);
+    await post.save();
+  } else {
+    req.body.collaborators = [];
+
+    await PostModel.findByIdAndUpdate(id, req.body, options);
+  }
   const options = { returnDocument: 'after' };
   const updatedPost = await PostModel.findByIdAndUpdate(id, req.body, options);
   res.status(StatusCodes.OK).json({ updatedPost });
 };
 
 export const deletePost = async (req, res) => {
+  // Get post's id from request
   const { id } = req.params;
+  // Get post object from DB to remove it's collaborations
+  const post = await PostModel.findById(id);
+  await Promise.all(
+    // Iterate collaborators and delete each one from DB
+    post.collaborators.map(async collaborator => {
+      await CollaboratorModel.findByIdAndDelete(collaborator._id);
+    }),
+  );
+  // Delete post from DB
   await PostModel.findByIdAndDelete(id);
   res.status(StatusCodes.OK).json({ msg: 'post removed' });
 };
@@ -156,7 +260,7 @@ export const getPostStats = async (req, res) => {
 
   const defaultStats = {
     draft: stats.draft || 0,
-    publish: stats.publish || 0,
+    ready: stats.ready || 0,
     archive: stats.archive || 0,
   };
 

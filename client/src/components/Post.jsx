@@ -14,6 +14,7 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import remarkEmoji from 'remark-emoji';
+import MarkdownEditor from '@uiw/react-markdown-editor';
 
 day.extend(advancedFormat);
 
@@ -28,8 +29,8 @@ const Post = ({
   createdAt,
   isEditable = false,
 }) => {
-  const data = day(createdAt).format('MMM Do, YYYY');
-  const commentsLimit = 3;
+  // const data = day(createdAt).format('MMM Do, YYYY');
+  // const commentsLimit = 3;
   const tagsLimit = tags.length < 5 ? tags.length : 5;
 
   return (
@@ -50,15 +51,16 @@ const Post = ({
                 ),
               )
             : ''}
-          <div className="markdown-small-container">
+          {/* <div className="markdown-small-container">
+            <MarkdownEditor.Markdown source={content} height="300px" />
             <ReactMarkdown remarkPlugins={[gfm, remarkEmoji]}>
               {`${content.slice(0, 100)}...`}
             </ReactMarkdown>
-          </div>
+          </div> */}
         </div>
       </header>
       <div className="content">
-        <div className="content-center">
+        {/* <div className="content-center">
           <PostInfo
             icon={<BsFillChatLeftTextFill />}
             text={
@@ -74,9 +76,14 @@ const Post = ({
                 : null
             }
           />
-        </div>
+        </div> */}
         <PostInfo icon={<FaCalendarAlt />} text={createdAt} />
         <footer className="actions">
+          <>
+            <Link to={`../view-post/${_id}`} className="btn post-info-btn">
+              View
+            </Link>
+          </>
           {isEditable ? (
             <>
               <Link to={`../edit-post/${_id}`} className="btn post-info-btn">

@@ -17,6 +17,7 @@ export const allPostsLoader = async ({ request }) => {
       ...new URL(request.url).searchParams.entries(),
     ]);
     const { data } = await customRequest.get('/posts', { params });
+    console.log(data);
     return {
       data,
       searchValues: { ...params },
@@ -30,6 +31,46 @@ export const allPostsLoader = async ({ request }) => {
 export const editPostLoader = async ({ params }) => {
   try {
     const { data } = await customRequest.get(`/posts/${params.id}`);
+
+    const fetchCollaboratorsIds = async () => {
+      const collaboratorsIds = await Promise.all(
+        data.post.collaborators.map(async collaborator => {
+          const response = await customRequest.post(
+            '/users/get-collaborator-id',
+            { collabId: collaborator },
+          );
+          return response.data;
+        }),
+      );
+      return collaboratorsIds;
+    };
+
+    const collaboratorsIds = await fetchCollaboratorsIds();
+
+    const fetchUsers = async () => {
+      const collabUsers = await Promise.all(
+        collaboratorsIds.map(async value => {
+          const data = { userId: value.collaboration.user };
+          const response = await customRequest.post('/users/get-user-id', data);
+          return response.data;
+        }),
+      );
+      return collabUsers;
+    };
+
+    const collabUsers = await fetchUsers();
+
+    data.post.collaborators = collabUsers.map(value => ({
+      ...value,
+      _id: collaboratorsIds.find(
+        collab => collab.collaboration.user === value.user._id,
+      )?.collaboration?._id,
+      hasEditPermission:
+        collaboratorsIds.find(
+          collab => collab.collaboration.user === value.user._id,
+        )?.collaboration?.hasEditPermission || false,
+    }));
+
     return data;
   } catch (error) {
     toast.error(error?.response?.data?.msg);

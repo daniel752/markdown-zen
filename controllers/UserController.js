@@ -4,6 +4,7 @@ import PostModel from '../models/PostModel.js';
 import cloudinary from 'cloudinary';
 import { promises as fs } from 'fs';
 import { NotFoundError } from '../errors/CustomErrors.js';
+import CollaboratorModel from '../models/CollaboratorModel.js';
 
 export const getCurrentUser = async (req, res) => {
   const currentUser = await UserModel.findById(req.user.userId);
@@ -11,12 +12,22 @@ export const getCurrentUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: userWithoutPassword });
 };
 
-export const getUser = async (req, res) => {
-  console.log(req.body.collabEmail);
+export const getUserByEmail = async (req, res) => {
   const user = await UserModel.findOne({ email: req.body.collabEmail });
-  if (!user)
-    throw new NotFoundError(`user ${req.body.collabEmail} doesn't exists`);
+  if (!user) throw new NotFoundError(`user doesn't exists`);
   res.status(StatusCodes.OK).json({ user });
+};
+
+export const getUserById = async (req, res) => {
+  const user = await UserModel.findById(req.body.userId);
+  if (!user) throw new NotFoundError(`user doesn't exists`);
+  res.status(StatusCodes.OK).json({ user });
+};
+
+export const getCollaboratorById = async (req, res) => {
+  const collaboration = await CollaboratorModel.findById(req.body.collabId);
+  if (!collaboration) throw new NotFoundError(`collaborator doesn't exists`);
+  res.status(StatusCodes.OK).json({ collaboration });
 };
 
 export const getApplicationStats = async (req, res) => {

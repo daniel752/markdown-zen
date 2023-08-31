@@ -13,6 +13,7 @@ import {
   Profile,
   Admin,
   EditPost,
+  ViewPost,
 } from './pages';
 import {
   loginAction,
@@ -94,6 +95,11 @@ const router = createBrowserRouter([
             element: <EditPost />,
             loader: editPostLoader,
             action: editPostAction,
+          },
+          {
+            path: 'view-post/:id',
+            element: <ViewPost />,
+            loader: editPostLoader,
           },
           {
             path: 'delete-post/:id',
