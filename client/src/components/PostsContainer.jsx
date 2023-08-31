@@ -8,11 +8,12 @@ const PostsContainer = () => {
   const { user } = useOutletContext();
   const { data } = useAllPostsContext();
   const { posts, collaborators, totalPosts, numPages } = data;
+  console.log(posts);
+  console.log(collaborators);
   const isOwner = (userId, author) => {
     return userId === author;
   };
   const isEditCollaborator = collaborator => {
-    console.log(collaborator);
     if (collaborator) return collaborator.hasEditPermission;
     return false;
   };

@@ -329,3 +329,15 @@ button:disabled {
   background: #ffeeee;
   color: #d66a6a;
 }
+
+.sm-margin-top {
+  margin-top: 1rem;
+}
+
+.md-margin-top {
+  margin-top: 2rem;
+}
+
+.bg-margin-top {
+  margin-top: 3rem;
+}

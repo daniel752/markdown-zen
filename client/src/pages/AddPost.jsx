@@ -13,12 +13,12 @@ const AddPost = () => {
   return (
     <Wrapper>
       <Form method="post" className="form">
-        <h4 className="form-title">add markdown</h4>
+        <h5 className="form-title">add markdown</h5>
         <div className="form-center">
           <FormRow type="text" name="title" />
           <FormRowSelect
             name="status"
-            labelText="Post Status"
+            labelText="Status"
             list={Object.values(STATUS)}
           />
           <MultipleInput
@@ -31,7 +31,7 @@ const AddPost = () => {
             placeholder="enter..."
             name="tags"
           />
-          <CollaboratorsContainer />
+          <CollaboratorsContainer defaultValues={[]} />
         </div>
         <TextareaContainer />
         <SubmitBtn formBtn="form-btn center" />

@@ -38,7 +38,7 @@ const Wrapper = styled.section`
   .multi-input {
     p {
       font-size: var(--small-text);
-      color: rgba(0, 0, 0, 0.6);
+      color: var(--text-color);
       margin-bottom: 0.4rem;
     }
   }

@@ -1,7 +1,14 @@
 import { useState } from 'react';
 
 /* eslint-disable react/prop-types */
-const FormRow = ({ type, name, labelText, defaultValue = '', onChange }) => {
+const FormRow = ({
+  type,
+  name,
+  labelText,
+  defaultValue = '',
+  onChange,
+  isDisabled = false,
+}) => {
   return (
     <div className="form-row">
       <label htmlFor={name} className="form-label">
@@ -14,6 +21,7 @@ const FormRow = ({ type, name, labelText, defaultValue = '', onChange }) => {
         className="form-input"
         defaultValue={defaultValue}
         onChange={onChange}
+        disabled={isDisabled}
       />
     </div>
   );

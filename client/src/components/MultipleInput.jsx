@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 
 const MultipleInput = ({
@@ -10,6 +11,7 @@ const MultipleInput = ({
   inputVerifier = null, // Verifies every input in parent component after the 'enter' key is pressed and value is not empty
   showValues = true,
   isRemoveOnBlur = true,
+  isDisabled = false,
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [values, setValues] = useState(defaultValues);
@@ -50,7 +52,7 @@ const MultipleInput = ({
         <label htmlFor={name} className="form-label">
           {name || label}
         </label>
-        <p className="input-helper">press enter after each value</p>
+        <p>press enter after each value</p>
         <input
           type="text"
           className="form-input"
@@ -59,6 +61,7 @@ const MultipleInput = ({
           onChange={handleInputChange}
           onKeyDown={handleInputKeyDown}
           onBlur={handleBlur}
+          disabled={isDisabled}
         />
       </div>
       <div className="tags-container">

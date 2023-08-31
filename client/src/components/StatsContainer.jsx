@@ -13,7 +13,7 @@ const StatsContainer = ({ defaultStats }) => {
     },
     {
       title: 'published posts',
-      count: defaultStats?.publish || 0,
+      count: defaultStats?.ready || 0,
       icon: <FaCheck />,
       color: '#647acb',
       bcg: '#e0e8f9',

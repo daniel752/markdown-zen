@@ -3,7 +3,9 @@ import {
   getCurrentUser,
   getApplicationStats,
   updateUser,
-  getUser,
+  getUserByEmail,
+  getCollaboratorById,
+  getUserById,
 } from '../controllers/UserController.js';
 import {
   authorizePermissions,
@@ -14,7 +16,9 @@ import { validateUpdateUserInput } from '../middleware/ValidationMiddleware.js';
 
 const router = Router();
 
-router.post('/get-user', getUser);
+router.post('/get-user-email', getUserByEmail);
+router.post('/get-user-id', getUserById);
+router.post('/get-collaborator-id', getCollaboratorById);
 router.get('/current-user', getCurrentUser);
 router.get('/admin/app-stats', [
   authorizePermissions('admin'),
