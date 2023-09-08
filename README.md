@@ -9,6 +9,7 @@ MarkdownZen is a web application designed to streamline the creation and managem
   - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
+- [Running With Docker](#running-with-docker)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -80,6 +81,27 @@ Open your web browser and go to `http://localhost:5173`. This is where you'll fi
 - Secure authentication and authorization system.
 - ...
 
+### Running with Docker
+
+You can also run MarkdownZen using Docker. Follow these steps:
+
+1. **Pull the Docker Image**:
+
+   Pull the MarkdownZen Docker image from Docker Hub:
+
+   ```shell
+   docker pull daniel752/markdown-zen:v1.0.0
+  
+2. **Run the Container**:
+
+   Start the MarkdownZen container:
+   ```shell
+   docker run -d daniel752/markdown-zen:v1.0.0
+
+  
+  * -d: Run the container in detached mode (in the background).
+  * The container will run port 8000 inside and 5173 outside.
+   
 ## Contributing
 
 We welcome contributions from the community! To contribute to MarkdownZen, follow these steps:
