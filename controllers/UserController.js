@@ -2,9 +2,9 @@ import { StatusCodes } from 'http-status-codes';
 import UserModel from '../models/UserModel.js';
 import PostModel from '../models/PostModel.js';
 import cloudinary from 'cloudinary';
-import { promises as fs } from 'fs';
 import { NotFoundError } from '../errors/CustomErrors.js';
 import CollaboratorModel from '../models/CollaboratorModel.js';
+import { formatImage } from '../middleware/multerMiddleware.js';
 
 export const getCurrentUser = async (req, res) => {
   const currentUser = await UserModel.findById(req.user.userId);
@@ -41,8 +41,8 @@ export const updateUser = async (req, res) => {
   delete user.password;
 
   if (req.file) {
-    const response = await cloudinary.v2.uploader.upload(req.file.path);
-    await fs.unlink(req.file.path);
+    const file = formatImage(req.file);
+    const response = await cloudinary.v2.uploader.upload(file);
     user.avatar = response.secure_url;
     user.avatarPublicId = response.public_id;
   }
