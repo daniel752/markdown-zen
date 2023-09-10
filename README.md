@@ -81,7 +81,7 @@ Open your web browser and go to `http://localhost:5173`. This is where you'll fi
 - Secure authentication and authorization system.
 - ...
 
-### Running with Docker
+## Running with Docker
 
 You can also run MarkdownZen using Docker. Follow these steps:
 
