@@ -286,6 +286,16 @@ button:disabled {
   }
 }
 
+.loading-container {
+  margin: 10rem auto;
+  display: grid;
+  justify-items: center;
+  .loading-text {
+    margin-top: 1rem;
+    color: var(--text-color);
+  }
+}
+
 .loading {
   width: 6rem;
   height: 6rem;
