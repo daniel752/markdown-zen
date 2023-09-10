@@ -18,3 +18,4 @@ export { default as ChartsContainer } from './ChartsContainer';
 export { default as TextareaContainer } from './TextareaContainer';
 export { default as MultipleInput } from './MultipleInput';
 export { default as Loading } from './Loading';
+export { default as ErrorElement } from './ErrorElement';

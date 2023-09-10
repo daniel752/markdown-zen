@@ -74,7 +74,7 @@ const SearchContainer = () => {
           <FormRowSelect
             name="sort"
             labelText="sort"
-            list={['all', ...Object.keys(POST_SORT_BY)]}
+            list={[...Object.keys(POST_SORT_BY)]}
             defaultValue={sort}
             onChange={debounce(form => {
               submit(form);

@@ -11,10 +11,6 @@ import PostInfo from './PostInfo';
 import { Form } from 'react-router-dom';
 import day from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import ReactMarkdown from 'react-markdown';
-import gfm from 'remark-gfm';
-import remarkEmoji from 'remark-emoji';
-import MarkdownEditor from '@uiw/react-markdown-editor';
 
 day.extend(advancedFormat);
 
@@ -24,10 +20,9 @@ const Post = ({
   categories,
   tags,
   content,
-  comments,
   status,
   createdAt,
-  isEditable = false,
+  isEditable = true,
 }) => {
   // const data = day(createdAt).format('MMM Do, YYYY');
   // const commentsLimit = 3;
@@ -51,32 +46,9 @@ const Post = ({
                 ),
               )
             : ''}
-          {/* <div className="markdown-small-container">
-            <MarkdownEditor.Markdown source={content} height="300px" />
-            <ReactMarkdown remarkPlugins={[gfm, remarkEmoji]}>
-              {`${content.slice(0, 100)}...`}
-            </ReactMarkdown>
-          </div> */}
         </div>
       </header>
       <div className="content">
-        {/* <div className="content-center">
-          <PostInfo
-            icon={<BsFillChatLeftTextFill />}
-            text={
-              comments?.length > 0
-                ? comments.map((comment, index) =>
-                    index < commentsLimit ? (
-                      <div className="comment-item" key={comment}>
-                        <span>*</span>
-                        <p>{comment}</p>
-                      </div>
-                    ) : null,
-                  )
-                : null
-            }
-          />
-        </div> */}
         <PostInfo icon={<FaCalendarAlt />} text={createdAt} />
         <footer className="actions">
           <>

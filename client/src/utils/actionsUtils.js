@@ -20,81 +20,98 @@ export const registerAction = async ({ request }) => {
   }
 };
 
-export const loginAction = async ({ request }) => {
-  const formData = await request.formData();
-  const data = Object.fromEntries(formData);
-  try {
-    await customRequest.post('/auth/login', data);
-    toast.success(`Welcome ${data.email} to MySpot`);
-    return redirect('/dashboard');
-  } catch (error) {
-    toast.error(error?.response?.data?.msg);
-    return error;
-  }
-};
+export const loginAction =
+  queryClient =>
+  async ({ request }) => {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+    try {
+      await customRequest.post('/auth/login', data);
+      queryClient.invalidateQueries();
+      toast.success(`Welcome ${data.email} to MySpot`);
+      return redirect('/dashboard');
+    } catch (error) {
+      toast.error(error?.response?.data?.msg);
+      return error;
+    }
+  };
 
-export const addPostAction = async ({ request }) => {
-  const formData = await request.formData();
-  const data = Object.fromEntries(formData);
-  data.categories = data.categories.split(',');
-  if (data?.tags) data.tags = data.tags.split(',');
-  if (data?.collaborators) data.collaborators = JSON.parse(data.collaborators);
-  try {
-    await customRequest.post('/posts', data);
-    toast.success(`Added Post ${data.title} to your posts`);
-    return redirect('/dashboard/all-posts');
-  } catch (error) {
-    toast.error(error?.response?.data?.msg);
-    return error;
-  }
-};
+export const addPostAction =
+  queryClient =>
+  async ({ request }) => {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+    data.categories = data.categories.split(',');
+    if (data?.tags) data.tags = data.tags.split(',');
+    if (data?.collaborators)
+      data.collaborators = JSON.parse(data.collaborators);
+    try {
+      await customRequest.post('/posts', data);
+      queryClient.validateQueries(['posts']);
+      toast.success(`Added Post ${data.title} to your posts`);
+      return redirect('/dashboard/all-posts');
+    } catch (error) {
+      toast.error(error?.response?.data?.msg);
+      return error;
+    }
+  };
 
-export const editPostAction = async ({ request, params }) => {
-  const formData = await request.formData();
-  const data = Object.fromEntries(formData);
+export const editPostAction =
+  queryClient =>
+  async ({ request, params }) => {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
 
-  data.categories = data.categories.split(',');
-  if (data?.tags) data.tags = data.tags.split(',');
-  if (data?.collaborators) data.collaborators = JSON.parse(data.collaborators);
-  try {
-    await customRequest.patch(`/posts/${params.id}`, data);
-    toast.success('Post updated');
-    return redirect('/dashboard/all-posts');
-  } catch (error) {
-    toast.error(error?.response?.data?.msg);
-    return error;
-  }
-};
+    data.categories = data.categories.split(',');
+    if (data?.tags) data.tags = data.tags.split(',');
+    if (data?.collaborators)
+      data.collaborators = JSON.parse(data.collaborators);
+    try {
+      await customRequest.patch(`/posts/${params.id}`, data);
+      queryClient.validateQueries(['posts']);
+      toast.success('Post updated');
+      return redirect('/dashboard/all-posts');
+    } catch (error) {
+      toast.error(error?.response?.data?.msg);
+      return error;
+    }
+  };
 
-export const deletePostAction = async ({ params }) => {
-  try {
-    await customRequest.delete(`/posts/${params.id}`);
-    toast.success('Post deleted');
-    return redirect('/dashboard/all-posts');
-  } catch (error) {
-    toast.error(error?.response?.data?.msg);
-    return error;
-  }
-};
+export const deletePostAction =
+  queryClient =>
+  async ({ params }) => {
+    try {
+      await customRequest.delete(`/posts/${params.id}`);
+      queryClient.validateQueries(['posts']);
+      toast.success('Post deleted');
+      return redirect('/dashboard/all-posts');
+    } catch (error) {
+      toast.error(error?.response?.data?.msg);
+      return error;
+    }
+  };
 
-export const updateUserAction = async ({ request }) => {
-  const formData = await request.formData();
-  const file = formData.get('avatar');
+export const updateUserAction =
+  queryClient =>
+  async ({ request }) => {
+    const formData = await request.formData();
+    const file = formData.get('avatar');
 
-  if (file && file.size > 500000) {
-    toast.error('Image size is too large');
+    if (file && file.size > 500000) {
+      toast.error('Image size is too large');
+      return null;
+    }
+
+    try {
+      await customRequest.patch('users/update-user', formData);
+      queryClient.invalidateQueries(['user']);
+      toast.success('Profile updated');
+    } catch (error) {
+      toast.error(error?.response?.data?.msg);
+    }
+
     return null;
-  }
-
-  try {
-    await customRequest.patch('users/update-user', formData);
-    toast.success('Profile updated');
-  } catch (error) {
-    toast.error(error?.response?.data?.msg);
-  }
-
-  return null;
-};
+  };
 
 export const downloadPostAction = async ({ request }) => {
   const formData = await request.formData();

@@ -5,11 +5,12 @@ import {
   MultipleInput,
 } from '../components';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
-import { useLoaderData, useOutletContext } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { STATUS } from '../../../utils/constants';
 import { Form } from 'react-router-dom';
 import TextareaContainer from '../components/TextareaContainer';
-import CollaboratorsContainer from '../components/CollaboratorsContainer';
+import { useQuery } from '@tanstack/react-query';
+import { singlePostQuery } from '../utils/loadersUtils';
 
 const checkEmptyArray = array => {
   if (array[0] === '') return undefined;
@@ -17,12 +18,12 @@ const checkEmptyArray = array => {
 };
 
 const EditPost = () => {
-  const { user } = useOutletContext();
-  const { post } = useLoaderData();
-  const { title, categories, tags, content, status, collaborators } = post;
-  const isOwner = () => {
-    return user._id === post.author;
-  };
+  const id = useLoaderData();
+  console.log(id);
+  const { data } = useQuery(singlePostQuery(id));
+  console.log(data);
+  const { post } = data;
+  const { title, categories, tags, content, status } = post;
 
   return (
     <Wrapper>
@@ -52,10 +53,6 @@ const EditPost = () => {
             placeholder="enter..."
             name="tags"
             defaultValues={checkEmptyArray(tags)}
-          />
-          <CollaboratorsContainer
-            defaultValues={collaborators}
-            isDisabled={!isOwner()}
           />
           <TextareaContainer defaultValue={content} />
           <SubmitBtn formBtn="form-btn" submitText="submit" />

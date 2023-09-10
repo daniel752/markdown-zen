@@ -2,12 +2,8 @@ import { Form } from 'react-router-dom';
 import { FormRow, FormRowSelect, SubmitBtn } from '../components';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { STATUS } from '../../../utils/constants';
-// import MarkdownContainer from '../components/MarkdownContainer';
 import TextareaContainer from '../components/TextareaContainer';
 import MultipleInput from '../components/MultipleInput';
-import customRequest from '../../../utils/customRequest';
-import { toast } from 'react-toastify';
-import CollaboratorsContainer from '../components/CollaboratorsContainer';
 
 const AddPost = () => {
   return (
@@ -31,7 +27,6 @@ const AddPost = () => {
             placeholder="enter..."
             name="tags"
           />
-          <CollaboratorsContainer defaultValues={[]} />
         </div>
         <TextareaContainer />
         <SubmitBtn formBtn="form-btn center" />

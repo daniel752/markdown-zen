@@ -10,7 +10,7 @@ import mongoose from 'mongoose';
 import { param } from 'express-validator';
 import PostModel from '../models/PostModel.js';
 import UserModel from '../models/UserModel.js';
-import CollaboratorModel from '../models/CollaboratorModel.js';
+// import CollaboratorModel from '../models/CollaboratorModel.js';
 
 const sanitizeSpecialCharacters = value => {
   // Eliminate any whitespace
@@ -76,17 +76,17 @@ export const validateIdParam = withValidationErrors([
     const isAdmin = req.user.role === 'admin';
     const isOwner = req.user.userId === post.author.toString();
 
-    const collaboratorPromises = post.collaborators.map(
-      async collaborator => await CollaboratorModel.findById(collaborator),
-    );
-    const collaborators = await Promise.all(collaboratorPromises);
+    // const collaboratorPromises = post.collaborators.map(
+    //   async collaborator => await CollaboratorModel.findById(collaborator),
+    // );
+    // const collaborators = await Promise.all(collaboratorPromises);
 
-    const isCollaborator = collaborators.some(
-      collaborator =>
-        collaborator && collaborator.user.toString() === req.user.userId,
-    );
+    // const isCollaborator = collaborators.some(
+    //   collaborator =>
+    //     collaborator && collaborator.user.toString() === req.user.userId,
+    // );
 
-    if (!isAdmin && !isOwner && !isCollaborator)
+    if (!isAdmin && !isOwner)
       throw new UnauthorizedError('not authorized to access this route');
   }),
 ]);

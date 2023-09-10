@@ -3,7 +3,7 @@ import UserModel from '../models/UserModel.js';
 import PostModel from '../models/PostModel.js';
 import cloudinary from 'cloudinary';
 import { NotFoundError } from '../errors/CustomErrors.js';
-import CollaboratorModel from '../models/CollaboratorModel.js';
+// import CollaboratorModel from '../models/CollaboratorModel.js';
 import { formatImage } from '../middleware/multerMiddleware.js';
 
 export const getCurrentUser = async (req, res) => {

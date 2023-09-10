@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import {
   HomeLayout,
   Landing,
@@ -31,6 +33,7 @@ import {
   editPostLoader,
   statsLoader,
 } from './utils/loadersUtils';
+import { ErrorElement } from './components';
 
 const checkDefaultTheme = () => {
   const isDarkTheme = localStorage.getItem('darkTheme') === 'true';
@@ -39,6 +42,14 @@ const checkDefaultTheme = () => {
 };
 
 const isDarkThemeEnabled = checkDefaultTheme();
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // Query cache will be available for 5 minutes
+    },
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -58,32 +69,39 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <Login />,
-        action: loginAction,
+        action: loginAction(queryClient),
       },
       {
         path: 'dashboard',
-        element: <DashboardLayout isDarkThemeEnabled={isDarkThemeEnabled} />,
-        loader: dashboardLoader,
+        element: (
+          <DashboardLayout
+            isDarkThemeEnabled={isDarkThemeEnabled}
+            queryClient={queryClient}
+          />
+        ),
+        loader: dashboardLoader(queryClient),
         children: [
           {
             index: true,
             element: <AddPost />,
-            action: addPostAction,
+            action: addPostAction(queryClient),
           },
           {
             path: 'all-posts',
             element: <AllPosts />,
-            loader: allPostsLoader,
+            loader: allPostsLoader(queryClient),
+            errorElement: <ErrorElement />,
           },
           {
             path: 'stats',
             element: <Stats />,
-            loader: statsLoader,
+            loader: statsLoader(queryClient),
+            errorElement: <ErrorElement />,
           },
           {
             path: 'profile',
             element: <Profile />,
-            action: updateUserAction,
+            action: updateUserAction(queryClient),
           },
           {
             path: 'admin',
@@ -93,8 +111,8 @@ const router = createBrowserRouter([
           {
             path: 'edit-post/:id',
             element: <EditPost />,
-            loader: editPostLoader,
-            action: editPostAction,
+            loader: editPostLoader(queryClient),
+            action: editPostAction(queryClient),
           },
           {
             path: 'view-post/:id',
@@ -103,7 +121,7 @@ const router = createBrowserRouter([
           },
           {
             path: 'delete-post/:id',
-            action: deletePostAction,
+            action: deletePostAction(queryClient),
           },
           {
             path: 'download-post',
@@ -116,7 +134,12 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
 };
 
 export default App;

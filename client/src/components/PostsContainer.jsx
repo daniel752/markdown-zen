@@ -7,15 +7,15 @@ import { useOutletContext } from 'react-router-dom';
 const PostsContainer = () => {
   const { user } = useOutletContext();
   const { data } = useAllPostsContext();
-  const { posts, collaborators, totalPosts, numPages } = data;
+  const { posts, totalPosts, numPages } = data;
 
   const isOwner = (userId, author) => {
     return userId === author;
   };
-  const isEditCollaborator = collaborator => {
-    if (collaborator) return collaborator.hasEditPermission;
-    return false;
-  };
+  // const isEditCollaborator = collaborator => {
+  //   if (collaborator) return collaborator.hasEditPermission;
+  //   return false;
+  // };
 
   if (posts.length === 0) {
     return (
@@ -31,14 +31,17 @@ const PostsContainer = () => {
         {totalPosts} post{posts.length > 1 && 's'} found
       </h5>
       <div className="posts">
-        {posts.map((post, index) =>
+        {/* {posts.map((post, index) =>
           isOwner(user._id, post.author) ||
           isEditCollaborator(collaborators[index]) ? (
             <Post key={post._id} {...post} isEditable={true} />
           ) : (
             <Post key={post._id} {...post} />
           ),
-        )}
+        )} */}
+        {posts.map(post => (
+          <Post key={post._id} {...post} />
+        ))}
       </div>
       {numPages > 1 && <PageBtnContainer />}
     </Wrapper>

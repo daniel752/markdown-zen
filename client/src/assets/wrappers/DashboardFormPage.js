@@ -70,6 +70,7 @@ const Wrapper = styled.section`
   }
   .markdown-container {
     margin: 2rem 0;
+    overflow-x: scroll;
     max-width: 100%;
     h5 {
       margin-bottom: 1rem;
