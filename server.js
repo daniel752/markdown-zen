@@ -6,13 +6,13 @@ import PostRouter from './routes/PostRouter.js';
 import AuthRouter from './routes/AuthRouter.js';
 import UserRouter from './routes/UserRouter.js';
 import { StatusCodes } from 'http-status-codes';
-import ErrorHandlerMiddleware from './middleware/ErrorHandlerMiddleware.js';
 import { authenticateUser } from './middleware/AuthMiddleware.js';
 import cookieParser from 'cookie-parser';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { v2 as cloudinary } from 'cloudinary';
+import ErrorHandlerMiddleware from './middleware/ErrorHandlerMiddleware.js';
 
 dotenv.config();
 
@@ -32,13 +32,10 @@ if (process.env.NODE_ENV === 'development') {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.resolve(__dirname, './client/dist')));
 
-// Express middleware uses
 // Enabling Express app to use json
 app.use(express.json());
 // Enablin Express app to parse cookies
 app.use(cookieParser());
-// Making Express app to use 'ErrorHandlerMiddleware' for errors
-app.use(ErrorHandlerMiddleware);
 
 app.use('/api/v1/posts', authenticateUser, PostRouter);
 app.use('/api/v1/auth', AuthRouter);
@@ -52,10 +49,8 @@ app.use('*', (req, res) => {
   res.status(StatusCodes.NOT_FOUND).json({ msg: 'not found' });
 });
 
-app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: err.message });
-});
+// Making Express app to use 'ErrorHandlerMiddleware' for errors
+app.use(ErrorHandlerMiddleware);
 
 const port = process.env.PORT || 8000;
 

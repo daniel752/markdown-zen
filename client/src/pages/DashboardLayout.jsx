@@ -7,7 +7,7 @@ import {
   useNavigate,
   useNavigation,
 } from 'react-router-dom';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import Wrapper from '../assets/wrappers/Dashboard';
 import { SmallSidebar, BigSidebar, Navbar, Loading } from '../components';
 import customRequest from '../../../utils/customRequest';
@@ -24,6 +24,7 @@ const DashboardLayout = ({ isDarkThemeEnabled, queryClient }) => {
   const isPageLoading = navigation.state === 'loading';
   const [showSidebar, setShowSidebar] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(isDarkThemeEnabled);
+  const [isAuthError, setIsAuthError] = useState(false);
 
   const toggleDarkTheme = () => {
     const newTheme = !isDarkTheme;
@@ -42,6 +43,23 @@ const DashboardLayout = ({ isDarkThemeEnabled, queryClient }) => {
     queryClient.invalidateQueries();
     toast.success('bye bye');
   };
+
+  customRequest.interceptors.response.use(
+    response => {
+      return response;
+    },
+    error => {
+      if (error?.response?.status === 401) {
+        setIsAuthError(true);
+      }
+      return Promise.reject(error);
+    },
+  );
+
+  useEffect(() => {
+    if (!isAuthError) return;
+    logoutUser();
+  }, [isAuthError]);
 
   return (
     <DashboardContext.Provider
