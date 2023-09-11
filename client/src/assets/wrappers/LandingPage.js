@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 const Wrapper = styled.section`
   .logo {
+    width: 30rem;
+    height: 30rem;
     max-height: auto;
     max-width: 100%;
     grid-column: 1/2;
@@ -19,9 +21,11 @@ const Wrapper = styled.section`
     min-height: calc(100vh - var(--nav-height));
     display: grid;
     grid-template-rows: auto;
-    align-items: center;
     margin-top: 2rem;
     margin: 0 auto;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
   }
   h1 {
     font-weight: 1000;
@@ -50,7 +54,7 @@ const Wrapper = styled.section`
     padding: 0.75rem 1rem;
   }
   .info {
-    width: max-content;
+    width: 100%;
     margin: 4rem 1rem;
     grid-column: 1/2;
     grid-row: 2/3;
