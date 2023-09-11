@@ -3,8 +3,9 @@ import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { Link, useLoaderData } from 'react-router-dom';
 import { STATUS } from '../../../utils/constants';
 import { Form } from 'react-router-dom';
-import CollaboratorsContainer from '../components/CollaboratorsContainer';
 import MarkdownEditor from '@uiw/react-markdown-editor';
+import { useQuery } from '@tanstack/react-query';
+import { singlePostQuery } from '../utils/loadersUtils';
 
 const checkEmptyArray = array => {
   if (array[0] === '') return undefined;
@@ -12,8 +13,11 @@ const checkEmptyArray = array => {
 };
 
 const ViewPost = () => {
-  const { post } = useLoaderData();
-  const { title, categories, tags, content, status, collaborators } = post;
+  const id = useLoaderData();
+  const {
+    data: { post },
+  } = useQuery(singlePostQuery(id));
+  const { title, categories, tags, content, status } = post;
 
   return (
     <Wrapper>
@@ -48,12 +52,6 @@ const ViewPost = () => {
             defaultValues={checkEmptyArray(tags)}
             isDisabled={true}
           />
-          {collaborators?.length > 0 ? (
-            <CollaboratorsContainer
-              defaultValues={collaborators}
-              isDisabled={true}
-            />
-          ) : null}
           <MarkdownEditor.Markdown source={content} height="300px" />
         </div>
       </Form>

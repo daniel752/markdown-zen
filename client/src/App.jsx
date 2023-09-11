@@ -117,7 +117,7 @@ const router = createBrowserRouter([
           {
             path: 'view-post/:id',
             element: <ViewPost />,
-            loader: editPostLoader,
+            loader: editPostLoader(queryClient),
           },
           {
             path: 'delete-post/:id',

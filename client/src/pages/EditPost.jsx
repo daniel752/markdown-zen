@@ -5,7 +5,7 @@ import {
   MultipleInput,
 } from '../components';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import { STATUS } from '../../../utils/constants';
 import { Form } from 'react-router-dom';
 import TextareaContainer from '../components/TextareaContainer';
@@ -19,10 +19,9 @@ const checkEmptyArray = array => {
 
 const EditPost = () => {
   const id = useLoaderData();
-  console.log(id);
-  const { data } = useQuery(singlePostQuery(id));
-  console.log(data);
-  const { post } = data;
+  const {
+    data: { post },
+  } = useQuery(singlePostQuery(id));
   const { title, categories, tags, content, status } = post;
 
   return (
@@ -58,6 +57,12 @@ const EditPost = () => {
           <SubmitBtn formBtn="form-btn" submitText="submit" />
         </div>
       </Form>
+      <Link
+        to="/dashboard/all-posts"
+        className="btn post-info-btn md-margin-top"
+      >
+        Back
+      </Link>
     </Wrapper>
   );
 };

@@ -68,6 +68,10 @@ const Wrapper = styled.section`
     max-width: 70rem;
     flex-wrap: wrap;
   }
+  .tag {
+    padding-bottom: 0.1rem;
+    border-bottom: 3px solid var(--text-color);
+  }
   .markdown-container {
     margin: 2rem 0;
     overflow-x: scroll;

@@ -68,13 +68,15 @@ const MultipleInput = ({
           ? values.map((value, index) => (
               <div key={index} className="tag">
                 {value}
-                <button
-                  type="button"
-                  onClick={() => handleValueRemove(value)}
-                  className="tag-remove-btn"
-                >
-                  X
-                </button>
+                {!isDisabled && (
+                  <button
+                    type="button"
+                    onClick={() => handleValueRemove(value)}
+                    className="tag-remove-btn"
+                  >
+                    X
+                  </button>
+                )}
               </div>
             ))
           : null}

@@ -2,6 +2,8 @@ import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import helmet from 'helmet';
+import mongoSanitize from 'express-mongo-sanitize';
 import PostRouter from './routes/PostRouter.js';
 import AuthRouter from './routes/AuthRouter.js';
 import UserRouter from './routes/UserRouter.js';
@@ -36,6 +38,8 @@ app.use(express.static(path.resolve(__dirname, './client/dist')));
 app.use(express.json());
 // Enablin Express app to parse cookies
 app.use(cookieParser());
+app.use(helmet());
+app.use(mongoSanitize());
 
 app.use('/api/v1/posts', authenticateUser, PostRouter);
 app.use('/api/v1/auth', AuthRouter);
